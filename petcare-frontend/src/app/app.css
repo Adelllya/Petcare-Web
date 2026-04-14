@@ -1,0 +1,8 @@
+/* App root styles */
+:host {
+  display: block;
+}
+
+main {
+  position: relative;
+}

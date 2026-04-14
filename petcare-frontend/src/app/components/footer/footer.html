@@ -1,0 +1,35 @@
+<footer class="footer" id="footer">
+  <div class="footer-inner">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="PetCare_logo.png" alt="PetCare" class="footer-logo" />
+          <p class="footer-tagline">
+            Платформа, которая объединяет приюты для животных
+            и помогает питомцам найти дом.
+          </p>
+        </div>
+
+        <div class="footer-links-group">
+          <h4 class="footer-heading">Платформа</h4>
+          <a href="#hero" class="footer-link" (click)="scrollTo('#hero', $event)">Главная</a>
+          <a href="#shelters" class="footer-link" (click)="scrollTo('#shelters', $event)">Приюты</a>
+          <a href="#pets" class="footer-link" (click)="scrollTo('#pets', $event)">Питомцы</a>
+          <a href="#how-it-works" class="footer-link" (click)="scrollTo('#how-it-works', $event)">Как это работает</a>
+        </div>
+
+        <div class="footer-links-group">
+          <h4 class="footer-heading">Контакты</h4>
+          <span class="footer-contact-item">shelters&#64;petcare.kz</span>
+          <span class="footer-contact-item">+7 (777) 123-45-67</span>
+          <span class="footer-contact-item">&#64;petcare_kz</span>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© {{ currentYear }} PetCare</p>
+        <p>Аделия · Ерали · Жалгасбек</p>
+      </div>
+    </div>
+  </div>
+</footer>

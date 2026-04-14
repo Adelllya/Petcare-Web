@@ -1,0 +1,13 @@
+{
+  "$schema": "https://railway.com/railway.schema.json",
+  "build": {
+    "builder": "NIXPACKS",
+    "watchPatterns": ["petcare-frontend/**"],
+    "buildCommand": "cd petcare-frontend && npm install && npm run build"
+  },
+  "deploy": {
+    "startCommand": "cd petcare-frontend && npm start",
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10
+  }
+}
