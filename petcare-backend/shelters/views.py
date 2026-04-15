@@ -143,6 +143,19 @@ class RegisterView(APIView):
         }, status=status.HTTP_201_CREATED)
 
 
+class LogoutView(APIView):
+    """
+    CBV #3: Выход пользователя (Logout).
+    POST /api/auth/logout/
+    """
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        # Реализация выхода на сервере. При использовании JWT, обычно удаляется токен на клиенте,
+        # либо refresh токен добавляется в blacklist. Возвращаем успешный статус.
+        return Response({"status": "success", "message": "Успешный выход"}, status=status.HTTP_200_OK)
+
+
 # ============================================================
 # ViewSets (ModelViewSet) — CRUD
 # ============================================================

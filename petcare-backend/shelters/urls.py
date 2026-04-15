@@ -4,7 +4,7 @@ from rest_framework_simplejwt.views import TokenRefreshView
 from .views import (
     ShelterViewSet, PetViewSet, TeamMemberViewSet,
     ServiceViewSet, ContactMessageViewSet, FavoriteViewSet,
-    LoginView, RegisterView,
+    LoginView, RegisterView, LogoutView,
     api_stats, toggle_favorite
 )
 
@@ -23,6 +23,7 @@ urlpatterns = [
     # Auth endpoints (CBV — APIView)
     path('auth/login/', LoginView.as_view(), name='auth-login'),
     path('auth/register/', RegisterView.as_view(), name='auth-register'),
+    path('auth/logout/', LogoutView.as_view(), name='auth-logout'),
     path('auth/refresh/', TokenRefreshView.as_view(), name='auth-refresh'),
 
     # FBV endpoints
