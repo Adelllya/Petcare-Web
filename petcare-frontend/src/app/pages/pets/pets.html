@@ -1,0 +1,149 @@
+<section class="pets-page">
+  <div class="container">
+
+    <!-- Header -->
+    <div class="pets-page-header">
+      <a routerLink="/" class="back-link">← На главную</a>
+      <h1 class="section-title">Все питомцы <span class="highlight-primary">🐾</span></h1>
+      <p class="section-subtitle">
+        Найди своего нового друга среди <strong>{{ allPets.length }}</strong> питомцев из
+        {{ shelterOptions.length }} приютов
+      </p>
+      <button class="btn btn-secondary stats-btn" (click)="loadStats()">
+        📊 Показать статистику
+      </button>
+    </div>
+
+    <!-- Toast notification -->
+    @if (toastMessage()) {
+      <div class="toast-bar">{{ toastMessage() }}</div>
+    }
+
+    <!-- Error -->
+    @if (errorMessage()) {
+      <div class="error-banner">⚠️ {{ errorMessage() }}</div>
+    }
+
+    <!-- Filters (4 ngModel controls) -->
+    <div class="filters-panel">
+      <div class="filter-group">
+        <label for="search-name">🔍 Поиск по кличке</label>
+        <input
+          id="search-name"
+          type="text"
+          [(ngModel)]="searchName"
+          (input)="applyFilters()"
+          placeholder="Введите кличку..."
+        />
+      </div>
+
+      <div class="filter-group">
+        <label for="filter-species">🐕 Вид</label>
+        <select id="filter-species" [(ngModel)]="filterSpecies" (change)="applyFilters()">
+          <option value="">Все виды</option>
+          <option value="dog">Собаки 🐕</option>
+          <option value="cat">Кошки 🐈</option>
+          <option value="other">Другие</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="filter-gender">⚥ Пол</label>
+        <select id="filter-gender" [(ngModel)]="filterGender" (change)="applyFilters()">
+          <option value="">Любой пол</option>
+          <option value="male">Мальчик ♂</option>
+          <option value="female">Девочка ♀</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="filter-shelter">🏠 Приют</label>
+        <select id="filter-shelter" [(ngModel)]="filterShelter" (change)="applyFilters()">
+          <option value="">Все приюты</option>
+          @for (shelter of shelterOptions; track shelter) {
+            <option [value]="shelter">{{ shelter }}</option>
+          }
+        </select>
+      </div>
+
+      <button class="btn btn-secondary reset-btn" (click)="resetFilters()">
+        ✕ Сбросить
+      </button>
+    </div>
+
+    <!-- Result count -->
+    @if (!isLoading()) {
+      <p class="results-count">
+        Найдено: <strong>{{ filteredPets.length }}</strong> питомцев
+        @if (availableCount < filteredPets.length) {
+          · доступно: <strong>{{ availableCount }}</strong>
+        }
+      </p>
+    }
+
+    <!-- Loading -->
+    @if (isLoading()) {
+      <div class="loading-grid">
+        @for (n of [1,2,3,4,5,6]; track n) {
+          <div class="skeleton-card"></div>
+        }
+      </div>
+    }
+
+    <!-- Pets grid — uses @for Angular 17+ -->
+    @if (!isLoading() && filteredPets.length > 0) {
+      <div class="pets-grid">
+        @for (pet of filteredPets; track pet.id) {
+          <div class="pet-card" [class.adopted]="pet.is_adopted">
+
+            <div class="pet-card-image-wrap">
+              <img [src]="pet.image" [alt]="pet.name" class="pet-card-img" />
+              @if (pet.is_adopted) {
+                <div class="adopted-badge">✅ Усыновлён</div>
+              }
+              <div class="species-badge">
+                @if (pet.species === 'dog') { 🐕 }
+                @if (pet.species === 'cat') { 🐈 }
+                @if (pet.species === 'other') { 🐾 }
+              </div>
+            </div>
+
+            <div class="pet-card-body">
+              <h3 class="pet-card-name">{{ pet.name }}</h3>
+              <p class="pet-card-breed">{{ pet.breed }}</p>
+
+              <div class="pet-card-meta">
+                <span class="meta-chip">{{ pet.gender_display }}</span>
+                <span class="meta-chip">📅 {{ pet.age }}</span>
+              </div>
+
+              <p class="pet-shelter-name">🏠 {{ pet.shelter_name }}</p>
+
+              @if (!pet.is_adopted) {
+                <button
+                  class="btn btn-primary pet-fav-btn"
+                  (click)="toggleFavorite(pet)"
+                >
+                  ❤️ В избранное
+                </button>
+              } @else {
+                <span class="pet-adopted-label">Питомец нашёл семью 🎉</span>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- Empty state -->
+    @if (!isLoading() && filteredPets.length === 0 && !errorMessage()) {
+      <div class="empty-state">
+        <div class="empty-icon">🔍</div>
+        <h3>Питомцев не найдено</h3>
+        <p>Попробуй изменить фильтры</p>
+        <button class="btn btn-primary" (click)="resetFilters()">Сбросить фильтры</button>
+      </div>
+    }
+
+  </div>
+</section>

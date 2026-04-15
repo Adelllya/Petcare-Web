@@ -1,0 +1,136 @@
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gradient-hero);
+  padding: 20px;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 440px;
+}
+
+.login-back {
+  display: inline-block;
+  margin-bottom: 24px;
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: var(--text-sm);
+  transition: color var(--transition-fast);
+}
+
+.login-back:hover {
+  color: var(--color-primary-dark);
+}
+
+.login-card {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: 48px 36px;
+  box-shadow: var(--shadow-xl);
+  text-align: center;
+}
+
+.login-logo {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.login-title {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--color-dark);
+  margin-bottom: 8px;
+}
+
+.login-subtitle {
+  font-size: var(--text-sm);
+  color: var(--color-text-light);
+  margin-bottom: 32px;
+}
+
+.alert {
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.alert-error {
+  background: #fef2f2;
+  color: var(--color-error);
+  border: 1px solid #fecaca;
+}
+
+.alert-success {
+  background: #f0fdf4;
+  color: var(--color-success);
+  border: 1px solid #bbf7d0;
+}
+
+.login-form {
+  text-align: left;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 6px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-base);
+  transition: all var(--transition-fast);
+  background: var(--color-bg);
+}
+
+.form-group input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(74, 173, 161, 0.15);
+}
+
+.login-btn {
+  width: 100%;
+  padding: 14px;
+  font-size: var(--text-base);
+  margin-top: 8px;
+}
+
+.login-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.login-toggle {
+  margin-top: 24px;
+  font-size: var(--text-sm);
+  color: var(--color-text-light);
+}
+
+.toggle-btn {
+  background: none;
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: var(--text-sm);
+  padding: 0;
+  margin-left: 4px;
+  transition: color var(--transition-fast);
+}
+
+.toggle-btn:hover {
+  color: var(--color-primary-dark);
+}

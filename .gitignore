@@ -137,3 +137,13 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# PetCare project
+docs/
+__pycache__/
+*.pyc
+db.sqlite3
+.DS_Store
+*.sqlite3
+petcare-backend/venv/
+petcare-backend/.env

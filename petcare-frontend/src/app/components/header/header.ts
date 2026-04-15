@@ -1,8 +1,11 @@
 import { Component, HostListener, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
   standalone: true,
+  imports: [RouterLink],
   templateUrl: './header.html',
   styleUrl: './header.css'
 })
@@ -11,13 +14,16 @@ export class HeaderComponent {
   isMobileMenuOpen = signal(false);
 
   readonly navLinks = [
-    { label: 'Главная', href: '#hero' },
-    { label: 'Приюты', href: '#shelters' },
-    { label: 'Питомцы', href: '#pets' },
-    { label: 'Как это работает', href: '#how-it-works' },
-    { label: 'Команда', href: '#team' },
-    { label: 'Контакты', href: '#contact' }
+    { label: 'Главная',         href: '#hero' },
+    { label: 'Приюты',          href: '#shelters' },
+    { label: 'Как это работает',href: '#how-it-works' },
+    { label: 'Команда',         href: '#team' },
+    { label: 'Контакты',        href: '#contact' },
   ];
+
+  readonly petsRoute = '/pets';
+
+  constructor(public auth: AuthService) {}
 
   @HostListener('window:scroll')
   onScroll() {
@@ -39,5 +45,9 @@ export class HeaderComponent {
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       this.closeMobileMenu();
     }
+  }
+
+  logout() {
+    this.auth.logout();
   }
 }

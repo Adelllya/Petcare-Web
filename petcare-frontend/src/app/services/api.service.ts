@@ -1,51 +1,60 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 // ============================================
-// TypeScript interfaces matching Django models
+// TypeScript интерфейсы — соответствуют Django моделям
 // ============================================
+
+export interface Shelter {
+  id: number;
+  name: string;
+  location: string;
+  image: string;
+  pet_count: number;
+  rating: number;
+  tag: string;
+  description: string;
+  phone: string;
+  email: string;
+  created_at: string;
+}
 
 export interface Pet {
   id: number;
   name: string;
-  species: string;  // 'dog' | 'cat' | 'other'
   breed: string;
-  age: number;
-  description: string;
-  image: string;
-  is_adopted: boolean;
+  age: string;
+  species: string;
+  gender: string;
+  gender_display: string;
+  shelter: number;
   shelter_name: string;
-  created_at: string;
-}
-
-export interface Product {
-  id: number;
-  name: string;
-  category: string;
-  price: number;
-  description: string;
   image: string;
-  in_stock: boolean;
+  video: string;
+  description: string;
+  is_adopted: boolean;
+  created_at: string;
 }
 
 export interface TeamMember {
   id: number;
   name: string;
   role: string;
+  responsibility: string;
   image: string;
-  bio: string;
+  color: string;
+  order: number;
 }
 
-export interface Testimonial {
+export interface Service {
   id: number;
-  author_name: string;
-  author_avatar: string;
-  pet_type: string;
-  rating: number;
-  text: string;
-  created_at: string;
+  number: string;
+  icon: string;
+  title: string;
+  description: string;
+  order: number;
 }
 
 export interface ContactForm {
@@ -54,16 +63,16 @@ export interface ContactForm {
   message: string;
 }
 
-export interface Service {
-  id: number;
-  title: string;
-  description: string;
-  icon: string;
-  color: string;
+// DRF paginated response wrapper
+interface PaginatedResponse<T> {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: T[];
 }
 
 // ============================================
-// API Service — Django REST Framework ready
+// API Service — подключён к Django REST Framework
 // ============================================
 
 @Injectable({
@@ -80,40 +89,49 @@ export class ApiService {
 
   constructor(private http: HttpClient) {}
 
-  // --- Pets ---
+  // --- Приюты ---
+  getShelters(): Observable<Shelter[]> {
+    return this.http.get<PaginatedResponse<Shelter>>(`${this.baseUrl}/shelters/`).pipe(
+      map(response => response.results)
+    );
+  }
+
+  getShelter(id: number): Observable<Shelter> {
+    return this.http.get<Shelter>(`${this.baseUrl}/shelters/${id}/`);
+  }
+
+  // --- Питомцы ---
   getPets(): Observable<Pet[]> {
-    return this.http.get<Pet[]>(`${this.baseUrl}/pets/`);
+    return this.http.get<PaginatedResponse<Pet>>(`${this.baseUrl}/pets/`).pipe(
+      map(response => response.results)
+    );
   }
 
   getPet(id: number): Observable<Pet> {
     return this.http.get<Pet>(`${this.baseUrl}/pets/${id}/`);
   }
 
-  // --- Products ---
-  getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.baseUrl}/products/`);
+  getPetsByShelter(shelterId: number): Observable<Pet[]> {
+    return this.http.get<PaginatedResponse<Pet>>(`${this.baseUrl}/pets/?shelter=${shelterId}`).pipe(
+      map(response => response.results)
+    );
   }
 
-  getProduct(id: number): Observable<Product> {
-    return this.http.get<Product>(`${this.baseUrl}/products/${id}/`);
-  }
-
-  // --- Team ---
+  // --- Команда ---
   getTeamMembers(): Observable<TeamMember[]> {
-    return this.http.get<TeamMember[]>(`${this.baseUrl}/team/`);
+    return this.http.get<PaginatedResponse<TeamMember>>(`${this.baseUrl}/team/`).pipe(
+      map(response => response.results)
+    );
   }
 
-  // --- Testimonials ---
-  getTestimonials(): Observable<Testimonial[]> {
-    return this.http.get<Testimonial[]>(`${this.baseUrl}/testimonials/`);
-  }
-
-  // --- Services ---
+  // --- Шаги (Services) ---
   getServices(): Observable<Service[]> {
-    return this.http.get<Service[]>(`${this.baseUrl}/services/`);
+    return this.http.get<PaginatedResponse<Service>>(`${this.baseUrl}/services/`).pipe(
+      map(response => response.results)
+    );
   }
 
-  // --- Contact Form ---
+  // --- Форма обратной связи ---
   submitContactForm(data: ContactForm): Observable<any> {
     return this.http.post(`${this.baseUrl}/contact/`, data, this.httpOptions);
   }

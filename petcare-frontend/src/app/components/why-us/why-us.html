@@ -37,14 +37,14 @@
             <div class="pet-play-hint" [class.hidden]="hoveredPet() === pet.name">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
             </div>
-            <span class="pet-gender-tag">{{ pet.gender }}</span>
+            <span class="pet-gender-tag">{{ pet.gender_display }}</span>
           </div>
           <div class="pet-info">
             <h3 class="pet-name">{{ pet.name }}</h3>
             <p class="pet-breed">{{ pet.breed }} · {{ pet.age }}</p>
             <div class="pet-shelter">
               <span>🏠</span>
-              <span>{{ pet.shelter }}</span>
+              <span>{{ pet.shelter_name }}</span>
             </div>
           </div>
         </div>

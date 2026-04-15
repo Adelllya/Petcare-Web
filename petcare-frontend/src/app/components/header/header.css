@@ -94,6 +94,26 @@
   font-size: var(--text-sm);
 }
 
+/* Header actions (login/logout) */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.user-name {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.btn-sm {
+  padding: 8px 18px;
+  font-size: var(--text-xs);
+}
+
 /* Mobile Toggle */
 .mobile-toggle {
   display: none;

@@ -1,6 +1,6 @@
 <header class="header" [class.scrolled]="isScrolled()" id="header">
   <div class="header-container">
-    <a href="#hero" class="logo" (click)="scrollTo('#hero', $event)">
+    <a routerLink="/" class="logo">
       <img src="PetCare_logo.png" alt="PetCare" class="logo-img" />
     </a>
 
@@ -8,11 +8,17 @@
       @for (link of navLinks; track link.href) {
         <a [href]="link.href" class="nav-link" (click)="scrollTo(link.href, $event)">{{ link.label }}</a>
       }
+      <a [routerLink]="petsRoute" class="nav-link nav-link-pets">🐾 Все питомцы</a>
     </nav>
 
-    <a href="#contact" class="btn btn-primary nav-cta" (click)="scrollTo('#contact', $event)">
-      Стать партнёром
-    </a>
+    <div class="header-actions">
+      @if (auth.isLoggedIn()) {
+        <span class="user-name">{{ auth.currentUser()?.username }}</span>
+        <button class="btn btn-secondary btn-sm" (click)="logout()">Выйти</button>
+      } @else {
+        <a routerLink="/login" class="btn btn-primary nav-cta">Войти</a>
+      }
+    </div>
 
     <button class="mobile-toggle" (click)="toggleMobileMenu()" [class.active]="isMobileMenuOpen()" aria-label="Меню">
       <span></span><span></span><span></span>
@@ -24,7 +30,12 @@
       @for (link of navLinks; track link.href) {
         <a [href]="link.href" class="mobile-nav-link" (click)="scrollTo(link.href, $event)">{{ link.label }}</a>
       }
-      <a href="#contact" class="btn btn-primary mobile-cta" (click)="scrollTo('#contact', $event)">Стать партнёром</a>
+      <a [routerLink]="petsRoute" class="mobile-nav-link" (click)="closeMobileMenu()">🐾 Все питомцы</a>
+      @if (auth.isLoggedIn()) {
+        <button class="btn btn-secondary mobile-cta" (click)="logout()">Выйти ({{ auth.currentUser()?.username }})</button>
+      } @else {
+        <a routerLink="/login" class="btn btn-primary mobile-cta" (click)="closeMobileMenu()">Войти</a>
+      }
     </nav>
   </div>
 </header>
