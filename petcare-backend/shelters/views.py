@@ -1,3 +1,7 @@
-from django.shortcuts import render
+from rest_framework import viewsets
+from .models import Shelter
+from .serializers import ShelterSerializer
 
-# Create your views here.
+class ShelterViewSet(viewsets.ModelViewSet):
+    queryset = Shelter.objects.all()
+    serializer_class = ShelterSerializer

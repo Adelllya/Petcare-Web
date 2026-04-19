@@ -1,0 +1,25 @@
+<section class="how-it-works section" id="how-it-works">
+  <div class="container">
+    <span class="section-label">Как это работает</span>
+    <h2 class="section-title">
+      Четыре шага к <span class="highlight-accent">новому другу</span>
+    </h2>
+    <p class="section-subtitle">
+      От просмотра до усыновления — всё просто и прозрачно
+    </p>
+
+    <div class="steps-grid">
+      @for (step of steps; track step.number; let i = $index) {
+        <div class="step-card" [style.animation-delay]="(i * 0.15) + 's'">
+          <div class="step-number">{{ step.number }}</div>
+          <div class="step-icon">{{ step.icon }}</div>
+          <h3 class="step-title">{{ step.title }}</h3>
+          <p class="step-text">{{ step.description }}</p>
+          @if (i < steps.length - 1) {
+            <div class="step-arrow">→</div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</section>

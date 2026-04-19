@@ -1,0 +1,11 @@
+<section class="stats" id="stats">
+  <div class="stats-container container">
+    @for (stat of stats; track stat.label; let i = $index) {
+      <div class="stat-card" [style.animation-delay]="(i * 0.15) + 's'">
+        <span class="stat-icon">{{ stat.icon }}</span>
+        <div class="stat-value">{{ stat.current }}{{ stat.suffix }}</div>
+        <div class="stat-label">{{ stat.label }}</div>
+      </div>
+    }
+  </div>
+</section>

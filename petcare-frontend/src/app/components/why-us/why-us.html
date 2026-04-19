@@ -1,0 +1,54 @@
+<section class="pets section" id="pets">
+  <div class="container">
+    <span class="section-label">Питомцы</span>
+    <h2 class="section-title">
+      Познакомься с <span class="highlight-primary">питомцами</span>
+    </h2>
+    <p class="section-subtitle">
+      Наведи на карточку — увидишь видео с питомцем, прямо как на YouTube
+    </p>
+
+    <div class="pets-grid">
+      @for (pet of pets; track pet.name; let i = $index) {
+        <div
+          class="pet-card"
+          [style.animation-delay]="(i * 0.1) + 's'"
+          (mouseenter)="onHover(pet.name)"
+          (mouseleave)="onLeave()"
+        >
+          <div class="pet-media">
+            <img
+              [src]="pet.image"
+              [alt]="pet.name"
+              class="pet-image"
+              loading="lazy"
+              [class.hidden]="hoveredPet() === pet.name"
+            />
+            @if (hoveredPet() === pet.name) {
+              <video
+                class="pet-video"
+                [src]="pet.video"
+                autoplay
+                muted
+                loop
+                playsinline
+              ></video>
+            }
+            <div class="pet-play-hint" [class.hidden]="hoveredPet() === pet.name">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+            <span class="pet-gender-tag">{{ pet.gender }}</span>
+          </div>
+          <div class="pet-info">
+            <h3 class="pet-name">{{ pet.name }}</h3>
+            <p class="pet-breed">{{ pet.breed }} · {{ pet.age }}</p>
+            <div class="pet-shelter">
+              <span>🏠</span>
+              <span>{{ pet.shelter }}</span>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

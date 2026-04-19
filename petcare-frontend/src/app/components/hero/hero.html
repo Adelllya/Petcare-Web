@@ -1,0 +1,77 @@
+<section class="hero" id="hero">
+  <div class="paw-deco paw-1">🐾</div>
+  <div class="paw-deco paw-2">🐾</div>
+  <div class="paw-deco paw-3">🐾</div>
+
+  <div class="hero-container container">
+    <div class="hero-content">
+      <span class="hero-badge">Платформа приютов Казахстана</span>
+      <h1 class="hero-title">
+        Каждый питомец
+        <span class="hero-title-accent">заслуживает</span>
+        дом
+      </h1>
+      <p class="hero-description">
+        Мы объединяем приюты для животных на одной площадке.
+        Находи ближайший приют, знакомься с питомцами через видео
+        и помоги им найти семью.
+      </p>
+      <div class="hero-actions">
+        <a href="#shelters" class="btn btn-primary btn-lg" (click)="scrollToServices($event)">
+          Смотреть приюты
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#pets" class="btn btn-secondary btn-lg" (click)="scrollToContact($event)">
+          Познакомиться с питомцами
+        </a>
+      </div>
+      <div class="hero-stats-mini">
+        <div class="hero-stat">
+          <span class="hero-stat-number">25+</span>
+          <span class="hero-stat-label">Приютов на платформе</span>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-number">300+</span>
+          <span class="hero-stat-label">Питомцев ждут дом</span>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-number">120+</span>
+          <span class="hero-stat-label">Уже нашли семью</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-image-wrapper">
+        <img
+          src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600&h=700&fit=crop&crop=face"
+          alt="Щенок ищет дом"
+          class="hero-image"
+          loading="eager"
+        />
+        <div class="hero-image-glow"></div>
+      </div>
+      <div class="hero-float-card float-card-1">
+        <span class="float-icon">🏠</span>
+        <div>
+          <strong>120+</strong>
+          <span>Нашли семью</span>
+        </div>
+      </div>
+      <div class="hero-float-card float-card-2">
+        <span class="float-icon">🐈</span>
+        <div>
+          <strong>25+</strong>
+          <span>Приютов онлайн</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+    <span>Листай вниз</span>
+  </div>
+</section>

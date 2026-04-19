@@ -1,0 +1,30 @@
+<section class="shelters section" id="shelters">
+  <div class="container">
+    <span class="section-label">Приюты</span>
+    <h2 class="section-title">
+      Лучшие <span class="highlight-accent">приюты</span> на платформе
+    </h2>
+    <p class="section-subtitle">
+      Приюты регистрируются сами, выкладывают фото и видео — а вы выбираете друга
+    </p>
+
+    <div class="shelters-grid">
+      @for (shelter of shelters; track shelter.name; let i = $index) {
+        <div class="shelter-card" [style.animation-delay]="(i * 0.12) + 's'">
+          <div class="shelter-image-wrapper">
+            <img [src]="shelter.image" [alt]="shelter.name" class="shelter-image" loading="lazy" />
+            <span class="shelter-tag">{{ shelter.tag }}</span>
+          </div>
+          <div class="shelter-info">
+            <h3 class="shelter-name">{{ shelter.name }}</h3>
+            <p class="shelter-location">📍 {{ shelter.location }}</p>
+            <div class="shelter-meta">
+              <span class="shelter-pets">🐾 {{ shelter.petCount }} питомцев</span>
+              <span class="shelter-rating">{{ shelter.rating }}</span>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
