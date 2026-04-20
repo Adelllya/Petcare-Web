@@ -18,7 +18,7 @@ class Pet(models.Model):
     shelter = models.ForeignKey(
         Shelter,
         on_delete=models.CASCADE,
-        related_name='pets',
+        related_name='animal_pets',
         verbose_name="Приют"
     )
 
