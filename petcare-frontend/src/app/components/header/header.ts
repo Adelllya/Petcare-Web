@@ -14,14 +14,15 @@ export class HeaderComponent {
   isMobileMenuOpen = signal(false);
 
   readonly navLinks = [
-    { label: 'Главная',         href: '#hero' },
-    { label: 'Приюты',          href: '#shelters' },
-    { label: 'Как это работает',href: '#how-it-works' },
-    { label: 'Команда',         href: '#team' },
-    { label: 'Контакты',        href: '#contact' },
+    { label: 'Главная',          href: '#hero' },
+    { label: 'Как это работает', href: '#how-it-works' },
+    { label: 'Команда',          href: '#team' },
+    { label: 'Контакты',         href: '#contact' },
   ];
 
   readonly petsRoute = '/pets';
+  readonly sheltersRoute = '/shelters';
+  readonly dashboardRoute = '/dashboard';
 
   constructor(public auth: AuthService) {}
 

@@ -63,6 +63,41 @@ export interface ContactForm {
   message: string;
 }
 
+export interface ShelterStats {
+  shelters_count: number;
+  pets_count: number;
+  adopted_count: number;
+  total_pets: number;
+}
+
+export interface CreateShelterForm {
+  name: string;
+  location: string;
+  image: string;
+  description: string;
+  phone: string;
+  email: string;
+  tag: string;
+}
+
+export interface CreatePetForm {
+  name: string;
+  breed: string;
+  age: string;
+  species: string;
+  gender: string;
+  shelter: number;
+  image: string;
+  description: string;
+}
+
+export interface Favorite {
+  id: number;
+  pet: number;
+  pet_detail: Pet;
+  created_at: string;
+}
+
 // DRF paginated response wrapper
 interface PaginatedResponse<T> {
   count: number;
@@ -134,5 +169,44 @@ export class ApiService {
   // --- Форма обратной связи ---
   submitContactForm(data: ContactForm): Observable<any> {
     return this.http.post(`${this.baseUrl}/contact/`, data, this.httpOptions);
+  }
+
+  // --- Статистика платформы ---
+  getStats(): Observable<ShelterStats> {
+    return this.http.get<ShelterStats>(`${this.baseUrl}/stats/`);
+  }
+
+  // --- Создать приют ---
+  createShelter(data: CreateShelterForm): Observable<Shelter> {
+    return this.http.post<Shelter>(`${this.baseUrl}/shelters/`, data, this.httpOptions);
+  }
+
+  // --- Создать питомца ---
+  createPet(data: CreatePetForm): Observable<Pet> {
+    return this.http.post<Pet>(`${this.baseUrl}/pets/`, data, this.httpOptions);
+  }
+
+  // --- Пометить питомца усыновлённым / отменить ---
+  adoptPet(petId: number): Observable<Pet> {
+    return this.http.patch<Pet>(`${this.baseUrl}/pets/${petId}/`, { is_adopted: true }, this.httpOptions);
+  }
+
+  unadoptPet(petId: number): Observable<Pet> {
+    return this.http.patch<Pet>(`${this.baseUrl}/pets/${petId}/`, { is_adopted: false }, this.httpOptions);
+  }
+
+  // --- Избранное ---
+  getFavorites(): Observable<Favorite[]> {
+    return this.http.get<{ count: number; results: Favorite[] }>(`${this.baseUrl}/favorites/`).pipe(
+      map(r => r.results)
+    );
+  }
+
+  addFavorite(petId: number): Observable<any> {
+    return this.http.post(`${this.baseUrl}/pets/${petId}/favorite/`, {}, this.httpOptions);
+  }
+
+  removeFavorite(petId: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/pets/${petId}/favorite/`, this.httpOptions);
   }
 }

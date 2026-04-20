@@ -8,12 +8,16 @@
       @for (link of navLinks; track link.href) {
         <a [href]="link.href" class="nav-link" (click)="scrollTo(link.href, $event)">{{ link.label }}</a>
       }
-      <a [routerLink]="petsRoute" class="nav-link nav-link-pets">🐾 Все питомцы</a>
+      <a [routerLink]="sheltersRoute" class="nav-link nav-link-shelters">🏠 Приюты</a>
+      <a [routerLink]="petsRoute" class="nav-link nav-link-pets">🐾 Питомцы</a>
     </nav>
 
     <div class="header-actions">
       @if (auth.isLoggedIn()) {
-        <span class="user-name">{{ auth.currentUser()?.username }}</span>
+        <a [routerLink]="dashboardRoute" class="btn btn-dashboard btn-sm">
+          <span class="avatar-mini">{{ auth.currentUser()?.username?.charAt(0)?.toUpperCase() }}</span>
+          Кабинет
+        </a>
         <button class="btn btn-secondary btn-sm" (click)="logout()">Выйти</button>
       } @else {
         <a routerLink="/login" class="btn btn-primary nav-cta">Войти</a>
@@ -30,9 +34,11 @@
       @for (link of navLinks; track link.href) {
         <a [href]="link.href" class="mobile-nav-link" (click)="scrollTo(link.href, $event)">{{ link.label }}</a>
       }
+      <a [routerLink]="sheltersRoute" class="mobile-nav-link" (click)="closeMobileMenu()">🏠 Приюты</a>
       <a [routerLink]="petsRoute" class="mobile-nav-link" (click)="closeMobileMenu()">🐾 Все питомцы</a>
       @if (auth.isLoggedIn()) {
-        <button class="btn btn-secondary mobile-cta" (click)="logout()">Выйти ({{ auth.currentUser()?.username }})</button>
+        <a [routerLink]="dashboardRoute" class="mobile-nav-link" (click)="closeMobileMenu()">⚙️ Кабинет ({{ auth.currentUser()?.username }})</a>
+        <button class="btn btn-secondary mobile-cta" (click)="logout()">Выйти</button>
       } @else {
         <a routerLink="/login" class="btn btn-primary mobile-cta" (click)="closeMobileMenu()">Войти</a>
       }

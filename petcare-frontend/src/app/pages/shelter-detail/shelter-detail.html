@@ -41,15 +41,27 @@
 
       <div class="pets-detail-grid">
         @for (pet of pets; track pet.id) {
-          <div class="pet-detail-card">
-            <img [src]="pet.image" [alt]="pet.name" class="pet-detail-img" />
+          <div class="pet-detail-card" [class.adopted]="pet.is_adopted">
+            <div class="pet-img-wrap-detail">
+              <img [src]="pet.image" [alt]="pet.name" class="pet-detail-img" />
+              @if (pet.is_adopted) {
+                <div class="adopted-badge-detail">🏠 Усыновлён</div>
+              }
+            </div>
             <div class="pet-detail-info">
               <h3>{{ pet.name }}</h3>
               <p>{{ pet.breed }} · {{ pet.age }}</p>
               <span class="pet-gender-badge">{{ pet.gender_display }}</span>
-              <button class="btn-favorite" (click)="toggleFavorite(pet.id, pet.name)">
-                ❤️ В избранное
-              </button>
+              <div class="pet-action-buttons">
+                <button class="btn-favorite" (click)="toggleFavorite(pet.id, pet.name)">
+                  ❤️ В избранное
+                </button>
+                <button class="btn-primary-sm btn-adopt-detail"
+                        [class.unadopt]="pet.is_adopted"
+                        (click)="adoptPet(pet)">
+                  {{ pet.is_adopted ? '↩ Отменить' : '🏠 Приютить' }}
+                </button>
+              </div>
             </div>
           </div>
         }

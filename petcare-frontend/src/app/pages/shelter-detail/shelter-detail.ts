@@ -66,4 +66,32 @@ export class ShelterDetailComponent implements OnInit {
       }
     });
   }
+
+  adoptPet(pet: Pet) {
+    if (!this.auth.isLoggedIn()) {
+      this.favoriteMessage.set('Войдите, чтобы приютить питомца');
+      setTimeout(() => this.favoriteMessage.set(''), 3000);
+      return;
+    }
+
+    const request = pet.is_adopted
+      ? this.api.unadoptPet(pet.id)
+      : this.api.adoptPet(pet.id);
+
+    request.subscribe({
+      next: (updatedPet) => {
+        const index = this.pets.findIndex(p => p.id === pet.id);
+        if (index !== -1) {
+          this.pets[index] = updatedPet;
+        }
+        const msg = updatedPet.is_adopted ? `Ура! Вы приютили ${pet.name} 🏠` : `Статус отменен для ${pet.name}`;
+        this.favoriteMessage.set(msg);
+        setTimeout(() => this.favoriteMessage.set(''), 4000);
+      },
+      error: () => {
+        this.favoriteMessage.set('Ошибка или недостаточно прав');
+        setTimeout(() => this.favoriteMessage.set(''), 3000);
+      }
+    });
+  }
 }
