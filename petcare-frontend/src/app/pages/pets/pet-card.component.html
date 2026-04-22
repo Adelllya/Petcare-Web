@@ -1,0 +1,38 @@
+<div class="pet-card" [class.adopted]="pet.is_adopted">
+
+  <div class="pet-card-image-wrap">
+    <img [src]="pet.image" [alt]="pet.name" class="pet-card-img" />
+    @if (pet.is_adopted) {
+      <div class="adopted-badge">✅ Усыновлён</div>
+    }
+    <div class="species-badge">
+      @if (pet.species === 'dog') { 🐕 }
+      @if (pet.species === 'cat') { 🐈 }
+      @if (pet.species === 'other') { 🐾 }
+    </div>
+  </div>
+
+  <div class="pet-card-body">
+    <h3 class="pet-card-name">{{ pet.name }}</h3>
+    <p class="pet-card-breed">{{ pet.breed }}</p>
+
+    <div class="pet-card-meta">
+      <span class="meta-chip">{{ pet.gender_display }}</span>
+      <span class="meta-chip">📅 {{ pet.age }}</span>
+    </div>
+
+    <p class="pet-shelter-name">🏠 {{ pet.shelter_name }}</p>
+
+    @if (!pet.is_adopted) {
+      <button
+        class="btn btn-primary pet-fav-btn"
+        (click)="addToFavorites(pet)"
+      >
+        ❤️ В избранное
+      </button>
+    } @else {
+      <span class="pet-adopted-label">Питомец нашёл семью 🎉</span>
+    }
+  </div>
+
+</div>

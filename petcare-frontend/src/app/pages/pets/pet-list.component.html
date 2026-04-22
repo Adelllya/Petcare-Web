@@ -1,0 +1,108 @@
+<section class="pets-page">
+  <div class="container">
+
+    <div class="pets-page-header">
+      <a routerLink="/" class="back-link">← На главную</a>
+      <h1 class="section-title">Все питомцы <span class="highlight-primary">🐾</span></h1>
+      <p class="section-subtitle">
+        Найди своего нового друга среди <strong>{{ allPets.length }}</strong> питомцев из
+        {{ shelterOptions.length }} приютов
+      </p>
+      <button class="btn btn-secondary stats-btn" (click)="loadStats()">
+        📊 Показать статистику
+      </button>
+    </div>
+
+    @if (toastMessage()) {
+      <div class="toast-bar">{{ toastMessage() }}</div>
+    }
+
+    @if (errorMessage()) {
+      <div class="error-banner">⚠️ {{ errorMessage() }}</div>
+    }
+
+    <div class="filters-panel">
+      <div class="filter-group">
+        <label for="search-name">🔍 Поиск по кличке</label>
+        <input
+          id="search-name"
+          type="text"
+          [(ngModel)]="searchName"
+          (input)="applyFilters()"
+          placeholder="Введите кличку..."
+        />
+      </div>
+
+      <div class="filter-group">
+        <label for="filter-species">🐕 Вид</label>
+        <select id="filter-species" [(ngModel)]="filterSpecies" (change)="applyFilters()">
+          <option value="">Все виды</option>
+          <option value="dog">Собаки 🐕</option>
+          <option value="cat">Кошки 🐈</option>
+          <option value="other">Другие</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="filter-gender">⚥ Пол</label>
+        <select id="filter-gender" [(ngModel)]="filterGender" (change)="applyFilters()">
+          <option value="">Любой пол</option>
+          <option value="male">Мальчик ♂</option>
+          <option value="female">Девочка ♀</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="filter-shelter">🏠 Приют</label>
+        <select id="filter-shelter" [(ngModel)]="filterShelter" (change)="applyFilters()">
+          <option value="">Все приюты</option>
+          @for (shelter of shelterOptions; track shelter) {
+            <option [value]="shelter">{{ shelter }}</option>
+          }
+        </select>
+      </div>
+
+      <button class="btn btn-secondary reset-btn" (click)="toggleFilter()">
+        ✕ Сбросить фильтры
+      </button>
+    </div>
+
+    @if (!isLoading()) {
+      <p class="results-count">
+        Найдено: <strong>{{ filteredPets.length }}</strong> питомцев
+        @if (availableCount < filteredPets.length) {
+          · доступно: <strong>{{ availableCount }}</strong>
+        }
+      </p>
+    }
+
+    @if (isLoading()) {
+      <div class="loading-grid">
+        @for (n of [1,2,3,4,5,6]; track n) {
+          <div class="skeleton-card"></div>
+        }
+      </div>
+    }
+
+    @if (!isLoading() && filteredPets.length > 0) {
+      <div class="pets-grid">
+        @for (pet of filteredPets; track pet.id) {
+          <app-pet-card
+            [pet]="pet"
+            (addToFavorites)="onAddToFavorites($event)"
+          ></app-pet-card>
+        }
+      </div>
+    }
+
+    @if (!isLoading() && filteredPets.length === 0 && !errorMessage()) {
+      <div class="empty-state">
+        <div class="empty-icon">🔍</div>
+        <h3>Питомцев не найдено</h3>
+        <p>Попробуй изменить фильтры</p>
+        <button class="btn btn-primary" (click)="toggleFilter()">Сбросить фильтры</button>
+      </div>
+    }
+
+  </div>
+</section>

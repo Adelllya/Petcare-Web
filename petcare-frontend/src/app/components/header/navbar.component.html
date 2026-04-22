@@ -1,0 +1,48 @@
+<header class="header" [class.scrolled]="isScrolled()" id="navbar">
+  <div class="header-container">
+
+    <a routerLink="/" class="logo">
+      <img src="PetCare_logo.png" alt="PetCare" class="logo-img" />
+    </a>
+
+    <nav class="nav-desktop">
+      @for (link of navLinks; track link.href) {
+        <a [href]="link.href" class="nav-link" (click)="scrollTo(link.href, $event)">{{ link.label }}</a>
+      }
+      <a [routerLink]="sheltersRoute" class="nav-link nav-link-shelters">🏠 Приюты</a>
+      <a [routerLink]="petsRoute" class="nav-link nav-link-pets">🐾 Питомцы</a>
+    </nav>
+
+    <div class="header-actions">
+      @if (auth.isLoggedIn()) {
+        <a [routerLink]="dashboardRoute" class="btn btn-dashboard btn-sm">
+          <span class="avatar-mini">{{ auth.currentUser()?.username?.charAt(0)?.toUpperCase() }}</span>
+          Кабинет
+        </a>
+        <button class="btn btn-secondary btn-sm" (click)="logout()">Выйти</button>
+      } @else {
+        <a routerLink="/login" class="btn btn-primary nav-cta">Войти</a>
+      }
+    </div>
+
+    <button class="mobile-toggle" (click)="toggleMobileMenu()" [class.active]="isMobileMenuOpen()" aria-label="Меню">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <div class="mobile-menu" [class.open]="isMobileMenuOpen()">
+    <nav class="mobile-nav">
+      @for (link of navLinks; track link.href) {
+        <a [href]="link.href" class="mobile-nav-link" (click)="scrollTo(link.href, $event)">{{ link.label }}</a>
+      }
+      <a [routerLink]="sheltersRoute" class="mobile-nav-link" (click)="closeMobileMenu()">🏠 Приюты</a>
+      <a [routerLink]="petsRoute" class="mobile-nav-link" (click)="closeMobileMenu()">🐾 Все питомцы</a>
+      @if (auth.isLoggedIn()) {
+        <a [routerLink]="dashboardRoute" class="mobile-nav-link" (click)="closeMobileMenu()">⚙️ Кабинет ({{ auth.currentUser()?.username }})</a>
+        <button class="btn btn-secondary mobile-cta" (click)="logout()">Выйти</button>
+      } @else {
+        <a routerLink="/login" class="btn btn-primary mobile-cta" (click)="closeMobileMenu()">Войти</a>
+      }
+    </nav>
+  </div>
+</header>

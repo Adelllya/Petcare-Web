@@ -1,0 +1,83 @@
+<section class="pet-detail-page">
+  <div class="container">
+
+    <a routerLink="/pets" class="back-link">← Все питомцы</a>
+
+    @if (isLoading()) {
+      <div class="detail-skeleton">
+        <div class="skeleton skeleton-img"></div>
+        <div class="skeleton-info">
+          <div class="skeleton skeleton-title"></div>
+          <div class="skeleton skeleton-text"></div>
+          <div class="skeleton skeleton-text"></div>
+        </div>
+      </div>
+    }
+
+    @if (errorMessage()) {
+      <div class="error-banner">⚠️ {{ errorMessage() }}</div>
+    }
+
+    @if (!isLoading() && pet) {
+      <div class="pet-detail-card">
+
+        <div class="pet-detail-image-wrap">
+          <img [src]="pet.image" [alt]="pet.name" class="pet-detail-img" />
+          @if (pet.is_adopted) {
+            <div class="adopted-badge-large">✅ Уже усыновлён</div>
+          }
+        </div>
+
+        <div class="pet-detail-info">
+          <h1 class="pet-detail-name">{{ pet.name }}</h1>
+          <p class="pet-detail-breed">{{ pet.breed }}</p>
+
+          <div class="pet-detail-meta">
+            <span class="meta-chip">{{ pet.gender_display }}</span>
+            <span class="meta-chip">📅 {{ pet.age }}</span>
+            <span class="meta-chip">
+              @if (pet.species === 'dog') { 🐕 Собака }
+              @if (pet.species === 'cat') { 🐈 Кошка }
+              @if (pet.species === 'other') { 🐾 Другой }
+            </span>
+          </div>
+
+          <p class="pet-shelter">🏠 Приют: <strong>{{ pet.shelter_name }}</strong></p>
+
+          <p class="pet-description">{{ pet.description }}</p>
+
+          @if (toastMessage()) {
+            <div class="toast-inline">{{ toastMessage() }}</div>
+          }
+
+          <div class="pet-detail-actions">
+            @if (!pet.is_adopted) {
+              <button
+                class="btn btn-primary btn-adopt"
+                (click)="onAdopt()"
+                [disabled]="isAdopting()"
+              >
+                @if (isAdopting()) {
+                  Обрабатываю...
+                } @else {
+                  🏡 Усыновить питомца
+                }
+              </button>
+
+              <button
+                class="btn btn-secondary"
+                (click)="addToFavorites()"
+              >
+                ❤️ В избранное
+              </button>
+            } @else {
+              <span class="adopted-label-text">Питомец нашёл дом 🎉</span>
+            }
+          </div>
+        </div>
+
+      </div>
+    }
+
+  </div>
+</section>
